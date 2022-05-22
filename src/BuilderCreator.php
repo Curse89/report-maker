@@ -3,9 +3,7 @@
 namespace ReportMaker;
 
 use ReportMaker\Builders\Builder;
-
 use Symfony\Component\Console\Input\ArgvInput;
-
 use ReportMaker\Builders\MdBuilder;
 
 class BuilderCreator
@@ -37,7 +35,7 @@ class BuilderCreator
         }
     }
 
-    protected static function checkParameter(?string $parameterVal, string $parameterName)
+    protected static function checkParameter(?string $parameterVal, string $parameterName): void
     {
         if (empty($parameterVal)) {
             throw new \RuntimeException("Parameter '$parameterName' mush have a value");
@@ -47,7 +45,7 @@ class BuilderCreator
     protected function getParameter(array $definition, ?string $default): string
     {
         $parameterVal = $this->input->getParameterOption($definition, $default);
-        $parameterName = mb_substr($definition[0], 0, 2);
+        $parameterName = mb_substr($definition[0], 2);
 
         static::checkParameter($parameterVal, $parameterName);
 
@@ -58,7 +56,8 @@ class BuilderCreator
     {
         $args = [];
         foreach ($parameters as $parameter) {
-            $args[] = $this->$parameter['method']($parameter['definition'], null);
+            $method = $parameter['method'];
+            $args[] = $this->$method($parameter['definition'], null);
         }
 
         return $args;

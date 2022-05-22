@@ -2,6 +2,7 @@
 
 namespace ReportMaker\Builders;
 
+use JsonException;
 use Symfony\Component\Process\Process;
 
 class MdBuilder extends Builder
@@ -18,7 +19,7 @@ class MdBuilder extends Builder
     }
 
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function exec(): void
     {
@@ -30,14 +31,14 @@ class MdBuilder extends Builder
                 $process->run(
                     function ($type, $buffer) {
                         if (Process::ERR === $type) {
-                            echo 'ERR > '.$buffer;
+                            echo 'ERR > ' . $buffer;
                         } else {
-                            echo 'OUT > '.$buffer;
+                            echo 'OUT > ' . $buffer;
                         }
                     }
                 );
 
-                /*if (!$process->isSuccessful()) {                     КОД завершения процесса всегда 2 - ОШИБКА
+                /*if (!$process->isSuccessful()) {                     КОД завершения процесса всегда 2 - ОШИБКА Misuse of shell builtins
                     throw new ProcessFailedException($process);
                 }*/
 

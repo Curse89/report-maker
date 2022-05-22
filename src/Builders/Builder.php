@@ -6,11 +6,11 @@ abstract class Builder
 {
     protected const BASE_REPORT_CLASS = "\\RetailCrm\\CodeQuality\\Report\\";
 
-    protected const VENDOR_BIN_DIR = "/vendor/bin/";
+    protected const VENDOR_BIN_DIR = "vendor/bin/";
 
     protected static array $requiredParameters = [
         'file' => [
-            'definition' => [],
+            'definition' => ["--files", "-f"],
             'method' => 'getChangedFiles'
         ]
     ];
