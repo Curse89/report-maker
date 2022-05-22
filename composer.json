@@ -1,0 +1,33 @@
+{
+    "name": "curse89/report-maker",
+    "description": "Report builder for php linters",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "ReportMaker\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Сергей Кривич",
+            "email": "krivich@retailcrm.ru"
+        }
+    ],
+    "require": {
+        "php": "^7.4",
+        "symfony/process": "4.3.*",
+        "symfony/console": "4.3.*",
+        "ext-json": "*"
+    },
+    "require-dev": {
+        "phpmd/phpmd": "^2.6",
+        "retailcrm/code-quality-reports": "dev-master"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://gitlab.retailcrm.tech/retailcrm/automate/code-quality-reports.git"
+        }
+    ]
+}
