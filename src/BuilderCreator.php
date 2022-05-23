@@ -3,6 +3,7 @@
 namespace ReportMaker;
 
 use ReportMaker\Builders\Builder;
+use ReportMaker\Builders\CsFixerBuilder;
 use Symfony\Component\Console\Input\ArgvInput;
 use ReportMaker\Builders\MdBuilder;
 
@@ -29,6 +30,11 @@ class BuilderCreator
                 $args = $this->getParameters(MdBuilder::getRequiredParameters());
 
                 return new MdBuilder(...$args);
+
+            case self::TYPE_CS_FIXER:
+                $args = $this->getParameters(CsFixerBuilder::getRequiredParameters());
+
+                return new CsFixerBuilder(...$args);
 
             default:
                 throw new \RuntimeException("The type parameter has an invalid value");
