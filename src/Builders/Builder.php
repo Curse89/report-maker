@@ -11,7 +11,8 @@ abstract class Builder
     protected static array $requiredParameters = [
         'file' => [
             'definition' => ["--files", "-f"],
-            'method' => 'getChangedFiles'
+            'method' => 'getChangedFiles',
+            'nullable' => false
         ]
     ];
 
