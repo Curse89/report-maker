@@ -13,7 +13,7 @@ class MdBuilder extends Builder
 
     protected const CONFIG_FILE = "./phpmd.xml.dist";
 
-    protected const OUTPUT_REPORT_FILE = "phpmd-report.json";
+    public const OUTPUT_REPORT_FILE = "phpmd-report.json";
 
     protected array $files;
 

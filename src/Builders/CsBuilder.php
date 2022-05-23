@@ -2,11 +2,14 @@
 
 namespace ReportMaker\Builders;
 
+use ReportMaker\Builders\Traits\MultiplyFilesLinterTrait;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
 class CsBuilder extends Builder
 {
+    use MultiplyFilesLinterTrait;
+
     protected const REPORT_CLASS = self::BASE_REPORT_CLASS . "CodeSniffer\\Gitlab";
 
     protected const BIN_DIR = self::VENDOR_BIN_DIR . "phpcs";
@@ -14,8 +17,8 @@ class CsBuilder extends Builder
     protected const STAND_PHPCOMPATIBILITY = "PHPCompatibility";
     protected const STAND_CUSTOM = "./phpcs.xml.dist";
 
-    protected const PHPCOMPATIBILITY_OUTPUT_REPORT_FILE = "php_compatibility-report.json";
-    protected const CUSTOM_OUTPUT_REPORT_FILE = "phpcs-report.json";
+    public const PHPCOMPATIBILITY_OUTPUT_REPORT_FILE = "php_compatibility-report.json";
+    public const CUSTOM_OUTPUT_REPORT_FILE = "phpcs-report.json";
 
     protected static array $requiredParameters = [
         'file' => [
@@ -34,8 +37,6 @@ class CsBuilder extends Builder
             'nullable' => false
         ]
     ];
-
-    protected array $files;
 
     protected ?string $standart;
 
@@ -85,8 +86,7 @@ class CsBuilder extends Builder
                 );
 
                 $process->run();
-
-            } else if (self::STAND_CUSTOM === $this->standart || null === $this->standart) {
+            } elseif (self::STAND_CUSTOM === $this->standart || null === $this->standart) {
                 $command = [
                     self::BIN_DIR,
                     "-p",
@@ -108,20 +108,5 @@ class CsBuilder extends Builder
                 $process->run();
             }
         }
-    }
-
-    protected function getExistenceFiles(): string
-    {
-        $existFiles = "";
-
-        $this->files = \array_filter($this->files, function (string $file) {
-            return \file_exists($file);
-        });
-
-        if (!empty($this->files)) {
-            $existFiles = \implode(" ", $this->files);
-        }
-
-        return $existFiles;
     }
 }

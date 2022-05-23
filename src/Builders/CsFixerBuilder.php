@@ -10,7 +10,7 @@ class CsFixerBuilder extends Builder
 
     protected const CONFIG_FILE = "./.php-cs-fixer.dist.php";
 
-    protected const OUTPUT_REPORT_FILE = "cs-fixer-diff-report.xml";
+    public const OUTPUT_REPORT_FILE = "cs-fixer-diff-report.xml";
 
     protected array $files;
 

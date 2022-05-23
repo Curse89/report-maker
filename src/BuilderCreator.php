@@ -3,8 +3,10 @@
 namespace ReportMaker;
 
 use ReportMaker\Builders\Builder;
+use ReportMaker\Builders\CommonBuilder;
 use ReportMaker\Builders\CsBuilder;
 use ReportMaker\Builders\CsFixerBuilder;
+use ReportMaker\Builders\StanBuilder;
 use Symfony\Component\Console\Input\ArgvInput;
 use ReportMaker\Builders\MdBuilder;
 
@@ -13,6 +15,8 @@ class BuilderCreator
     protected const TYPE_MD = "phpmd";
     protected const TYPE_CS_FIXER = "php-cs-fixer";
     protected const TYPE_CS = "phpcs";
+    protected const TYPE_STAN = "phpstan";
+    protected const TYPE_COMMON = "common_report";
 
     protected const MODE_DEFINITION = ["--mode", "-m"];
 
@@ -39,9 +43,17 @@ class BuilderCreator
                 return new CsFixerBuilder(...$args);
 
             case self::TYPE_CS:
-                $args = $this->getParameters(CsFixerBuilder::getRequiredParameters());
+                $args = $this->getParameters(CsBuilder::getRequiredParameters());
 
                 return new CsBuilder(...$args);
+
+            case self::TYPE_STAN:
+                $args = $this->getParameters(StanBuilder::getRequiredParameters());
+
+                return new StanBuilder(...$args);
+
+            case self::TYPE_COMMON:
+                return new CommonBuilder();
 
             default:
                 throw new \RuntimeException("The type parameter has an invalid value");
