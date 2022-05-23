@@ -18,11 +18,12 @@
         "php": "^7.4",
         "symfony/process": "4.3.*",
         "symfony/console": "4.3.*",
-        "ext-json": "*"
-    },
-    "require-dev": {
-        "phpmd/phpmd": "^2.6",
-        "retailcrm/code-quality-reports": "dev-master"
+        "ext-json": "*",
+        "ext-simplexml": "*",
+        "ext-dom": "*",
+        "friendsofphp/php-cs-fixer": "^2.19",
+        "retailcrm/code-quality-reports": "dev-master",
+        "phpmd/phpmd": "^2.6"
     },
     "repositories": [
         {
