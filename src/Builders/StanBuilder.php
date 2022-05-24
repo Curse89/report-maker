@@ -12,7 +12,7 @@ class StanBuilder extends Builder
 
     protected const BIN_DIR = self::VENDOR_BIN_DIR . "phpstan";
 
-    protected const CONFIG_FILE = "./phpstan.neon";
+    protected const CONFIG_FILE = self::BASE_CONFIG_DIR . "phpstan.neon";
 
     public const OUTPUT_REPORT_FILE = "phpstan-report.json";
 

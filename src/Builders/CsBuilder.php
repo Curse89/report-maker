@@ -15,7 +15,7 @@ class CsBuilder extends Builder
     protected const BIN_DIR = self::VENDOR_BIN_DIR . "phpcs";
 
     protected const STAND_PHPCOMPATIBILITY = "PHPCompatibility";
-    protected const STAND_CUSTOM = "./phpcs.xml.dist";
+    protected const STAND_CUSTOM = self::BASE_CONFIG_DIR . "phpcs.xml.dist";
 
     public const PHPCOMPATIBILITY_OUTPUT_REPORT_FILE = "php_compatibility-report.json";
     public const CUSTOM_OUTPUT_REPORT_FILE = "phpcs-report.json";

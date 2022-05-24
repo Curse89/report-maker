@@ -11,7 +11,7 @@ class MdBuilder extends Builder
 
     protected const BIN_DIR = self::VENDOR_BIN_DIR . "phpmd";
 
-    protected const CONFIG_FILE = "./phpmd.xml.dist";
+    protected const CONFIG_FILE = self::BASE_CONFIG_DIR . "phpmd.xml.dist";
 
     public const OUTPUT_REPORT_FILE = "phpmd-report.json";
 

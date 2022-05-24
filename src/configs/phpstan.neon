@@ -1,0 +1,20 @@
+includes:
+	- vendor/phpstan/phpstan-symfony/extension.neon
+	- vendor/phpstan/phpstan-symfony/rules.neon
+	- vendor/phpstan/phpstan-doctrine/extension.neon
+	- vendor/phpstan/phpstan-doctrine/rules.neon
+
+parameters:
+	level: 7
+	checkMissingIterableValueType: false
+	checkGenericClassInNonGenericObjectType: false
+#	ignoreErrors:
+#		- '#PHPDoc tag \@throws with type [a-zA-Z0-9\\_]+ is not subtype of Throwable#'
+#		- '#Negated boolean expression is always (false|true)\.#'
+	symfony:
+	    container_xml_path: var/cache/test/srcApp_KernelTestDebugContainer.xml
+	    console_application_loader: tests/console-application.php
+	doctrine:
+		objectManagerLoader: tests/object-manager.php
+	bootstrapFiles:
+		- vendor/autoload.php

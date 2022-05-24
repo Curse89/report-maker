@@ -8,7 +8,7 @@ class CsFixerBuilder extends Builder
 {
     protected const BIN_DIR = self::VENDOR_BIN_DIR . "php-cs-fixer";
 
-    protected const CONFIG_FILE = "./.php-cs-fixer.dist.php";
+    protected const CONFIG_FILE = self::BASE_CONFIG_DIR . ".php-cs-fixer.dist.php";
 
     public const OUTPUT_REPORT_FILE = "cs-fixer-diff-report.xml";
 
