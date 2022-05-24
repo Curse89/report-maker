@@ -6,18 +6,10 @@ trait MultiplyFilesLinterTrait
 {
     protected array $files;
 
-    protected function getExistenceFiles(): string
+    protected function getExistenceFiles(): void
     {
-        $existFiles = "";
-
         $this->files = \array_filter($this->files, static function (string $file) {
             return \file_exists($file);
         });
-
-        if (!empty($this->files)) {
-            $existFiles = \implode(" ", $this->files);
-        }
-
-        return $existFiles;
     }
 }

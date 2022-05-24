@@ -6,7 +6,7 @@ abstract class Builder
 {
     protected const BASE_REPORT_CLASS = "\\RetailCrm\\CodeQuality\\Report\\";
 
-    protected const BASE_CONFIG_DIR = "vendor/curse89/report-maker/config/";
+    protected const BASE_CONFIG_DIR = "vendor/curse89/report-maker/src/configs/";
 
     protected const VENDOR_BIN_DIR = "vendor/bin/";
 

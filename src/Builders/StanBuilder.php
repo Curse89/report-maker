@@ -12,7 +12,9 @@ class StanBuilder extends Builder
 
     protected const BIN_DIR = self::VENDOR_BIN_DIR . "phpstan";
 
-    protected const CONFIG_FILE = self::BASE_CONFIG_DIR . "phpstan.neon";
+    protected const STAN_CONFIG_DIR = self::BASE_CONFIG_DIR . "phpstan/";
+
+    protected const CONFIG_FILE = "phpstan.neon";
 
     public const OUTPUT_REPORT_FILE = "phpstan-report.json";
 
@@ -26,11 +28,13 @@ class StanBuilder extends Builder
      */
     public function exec(): void
     {
-        $changedFiles = $this->getExistenceFiles();
+        $this->copyStanFilesToProject();
+
+        $this->getExistenceFiles();
 
         $lintRes = [];
 
-        if (!empty($changedFiles)) {
+        if (!empty($this->files)) {
             $process = new Process(
                 [
                     self::BIN_DIR,
@@ -39,7 +43,7 @@ class StanBuilder extends Builder
                     "7",
                     "-c",
                     self::CONFIG_FILE,
-                    $changedFiles,
+                    ...$this->files,
                     "--error-format=gitlab"
                 ]
             );
@@ -53,5 +57,24 @@ class StanBuilder extends Builder
             self::OUTPUT_REPORT_FILE,
             \json_encode($lintRes, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT)
         );
+    }
+
+    protected function copyStanFilesToProject(): void
+    {
+        $files = \scandir(self::STAN_CONFIG_DIR);
+
+        foreach ($files as $file) {
+            if (strpos($file, ".")) {
+                if (\strpos($file, ".neon")) {
+                    $destinationFile = "$file";
+                } else {
+                    $destinationFile = "tests/$file";
+                }
+
+                if (!\file_exists($destinationFile)) {
+                    \copy(self::STAN_CONFIG_DIR . $file, $destinationFile);
+                }
+            }
+        }
     }
 }

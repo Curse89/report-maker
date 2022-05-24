@@ -21,13 +21,13 @@ class CsBuilder extends Builder
     public const CUSTOM_OUTPUT_REPORT_FILE = "phpcs-report.json";
 
     protected static array $requiredParameters = [
-        'file' => [
+        'files' => [
             'definition' => ["--files", "-f"],
             'method' => 'getChangedFiles',
             'nullable' => false
         ],
-        'standart' => [
-            'definition' => ["--standart", "-s"],
+        'standard' => [
+            'definition' => ["--standard", "-s"],
             'method' => 'getParameter',
             'nullable' => true
         ],
@@ -38,23 +38,23 @@ class CsBuilder extends Builder
         ]
     ];
 
-    protected ?string $standart;
+    protected ?string $standard;
 
     protected string $version;
 
-    public function __construct($files, $standart, $version)
+    public function __construct($files, $standard, $version)
     {
         $this->files = $files;
-        $this->standart = $standart;
+        $this->standard = $standard;
         $this->version = $version;
     }
 
     public function exec(): void
     {
-        $changedFiles = $this->getExistenceFiles();
+        $this->getExistenceFiles();
 
-        if (!empty($changedFiles)) {
-            if (self::STAND_PHPCOMPATIBILITY === $this->standart) {
+        if (!empty($this->files)) {
+            if (self::STAND_PHPCOMPATIBILITY === $this->standard) {
                 $phpcsConfig = new Process(
                     [
                         self::BIN_DIR,
@@ -74,8 +74,8 @@ class CsBuilder extends Builder
                         self::BIN_DIR,
                         "-s",
                         "-p",
-                        $changedFiles,
-                        "--standart=" . self::STAND_PHPCOMPATIBILITY,
+                        ...$this->files,
+                        "--standard=" . self::STAND_PHPCOMPATIBILITY,
                         "--report-" . self::REPORT_CLASS,
                         "--report-file=" . self::PHPCOMPATIBILITY_OUTPUT_REPORT_FILE,
                         "--no-cache",
@@ -86,11 +86,11 @@ class CsBuilder extends Builder
                 );
 
                 $process->run();
-            } elseif (self::STAND_CUSTOM === $this->standart || null === $this->standart) {
+            } elseif (self::STAND_CUSTOM === $this->standard || null === $this->standard) {
                 $command = [
                     self::BIN_DIR,
                     "-p",
-                    $changedFiles,
+                    ...$this->files,
                     "--report-" . self::REPORT_CLASS,
                     "--report-file=" . self::CUSTOM_OUTPUT_REPORT_FILE,
                     "--no-cache",
@@ -99,8 +99,8 @@ class CsBuilder extends Builder
                     $this->version
                 ];
 
-                if (self::STAND_CUSTOM === $this->standart) {
-                    $command[] = "--standart=" . self::STAND_CUSTOM;
+                if (self::STAND_CUSTOM === $this->standard) {
+                    $command[] = "--standard=" . self::STAND_CUSTOM;
                 }
 
                 $process = new Process($command);

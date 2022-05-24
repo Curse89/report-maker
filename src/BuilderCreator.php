@@ -56,7 +56,7 @@ class BuilderCreator
                 return new CommonBuilder();
 
             default:
-                throw new \RuntimeException("The type parameter has an invalid value");
+                throw new \RuntimeException("The --mode parameter has an invalid value");
         }
     }
 
@@ -67,7 +67,7 @@ class BuilderCreator
         }
     }
 
-    protected function getParameter(array $definition, ?string $default, bool $nullable = false): string
+    protected function getParameter(array $definition, ?string $default, bool $nullable = false): ?string
     {
         $parameterVal = $this->input->getParameterOption($definition, $default);
         $parameterName = mb_substr($definition[0], 2);
